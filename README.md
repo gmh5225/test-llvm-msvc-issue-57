@@ -23,4 +23,4 @@ cmake -Bbuild -DCMAKE_WIN64_DRIVER=1
 cmake --build build --config Release
 ```
 
-You can open `build\llvm-msvc-driver-template.sln` in Visual Studio and work there.
+You can open `build\test-llvm-msvc-issue-57.sln` in Visual Studio and work there.
