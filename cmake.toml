@@ -1,7 +1,7 @@
 
 # Reference: https://build-cpp.github.io/cmkr/cmake-toml
 [project]
-name = "llvm-msvc-driver-template"
+name = "test-llvm-msvc-issue-57"
 include-before = [
 	"cmake/msvc-configurations.cmake",
 ]

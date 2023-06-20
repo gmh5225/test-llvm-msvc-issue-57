@@ -29,7 +29,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include("cmake/msvc-configurations.cmake")
 
-project(llvm-msvc-driver-template)
+project(test-llvm-msvc-issue-57)
 
 # Packages
 find_package(WDK REQUIRED)
