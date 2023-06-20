@@ -19,8 +19,8 @@ cmake --build build --config Release
 ## Building with msvc
 
 ```
-cmake -Bbuild -DCMAKE_WIN64_DRIVER=1
-cmake --build build --config Release
+cmake -Bbuild-msvc -DCMAKE_WIN64_DRIVER=1
+cmake --build build-msvc --config Release
 ```
 
 You can open `build\test-llvm-msvc-issue-57.sln` in Visual Studio and work there.
