@@ -1,4 +1,4 @@
-# llvm-msvc-windows-driver-template
+# test-llvm-msvc-issue-57
 
 Simple [`cmkr`](https://cmkr.build) template for a WDK kernel driver for Windows. The `WDK` package is based on [FindWDK](https://github.com/SergiusTheBest/FindWDK).
 
