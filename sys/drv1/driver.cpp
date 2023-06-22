@@ -7,6 +7,47 @@ DriverUnload(_In_ PDRIVER_OBJECT DriverObject)
     dprintf("[Driver] DriverUnload\n");
 }
 
+template < ULONG tag >
+class TestClass
+{
+    int value = 0;
+public:
+    TestClass(int value_ = 0) : value(value_){};
+};
+
+template < ULONG tag >
+void test()
+{
+
+#ifdef __clang__
+#pragma data_seg(".data")
+#endif
+    static int cnt { [](int val) { return val; }(tag) };
+    int *p_cnt = &cnt;
+
+    using TestClass = TestClass<tag>;
+    // 以下用llvm-msvc-kernelmode 2.6 开发驱动,必定会发生页故障, 
+    //但是wdk驱动开发工具是不会发生的,
+    static TestClass testClass1(tag+100);
+
+    static  TestClass testClass2(tag + 200);
+
+    static  TestClass testClass4 {[](int val) { return val; }(tag)};
+#ifdef __clang__
+    static thread_local int thr_cnt = [](auto val) { return val; }(tag + 1000);
+    int *p_thr_cnt = &thr_cnt;
+    static thread_local int thr_cnt2 = tag + 1000;
+    int *p_thr_cnt2 = &thr_cnt2;
+
+    static thread_local TestClass testClass3(tag + 300);
+#endif
+
+#ifdef __clang__
+#pragma data_seg()
+#endif
+}
+
+
 void
 func()
 {
@@ -16,7 +57,7 @@ func()
 
     MmBuildMdlForNonPagedPool(pMdl);
 
-    // ����ҳ��
+    // Ëø¶¨Ò³Ãæ
     MmProbeAndLockPages(pMdl, KernelMode, IoModifyAccess);
 
     PVOID pLockedBuffer = MmGetSystemAddressForMdlSafe(pMdl, NormalPagePriority);
@@ -35,6 +76,8 @@ DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING RegistryPath)
 
     dprintf("[Driver] DriverEntry\n");
 
+    test<128>();
+    
     func();
 
     dprintf("[Driver] I am alive\n");
